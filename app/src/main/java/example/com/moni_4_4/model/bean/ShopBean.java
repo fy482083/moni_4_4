@@ -86,9 +86,9 @@ public class ShopBean {
             private String createtime;
             private String detailUrl;
             private String images;
-            private String num;
+            private int num;
             private String pid;
-            private String price;
+            private int price;
             private String pscid;
             private String selected;
             private String sellerid;
@@ -136,11 +136,11 @@ public class ShopBean {
                 this.images = images;
             }
 
-            public String getNum() {
+            public int getNum() {
                 return num;
             }
 
-            public void setNum(String num) {
+            public void setNum(int num) {
                 this.num = num;
             }
 
@@ -152,11 +152,11 @@ public class ShopBean {
                 this.pid = pid;
             }
 
-            public String getPrice() {
+            public int getPrice() {
                 return price;
             }
 
-            public void setPrice(String price) {
+            public void setPrice(int price) {
                 this.price = price;
             }
 

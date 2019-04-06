@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
 import com.facebook.drawee.view.SimpleDraweeView;
-
 import example.com.moni_4_4.R;
 import example.com.moni_4_4.model.bean.ShopBean;
 import example.com.moni_4_4.view.activity.PriceView;
@@ -99,6 +97,8 @@ public class ShopAdapter extends BaseExpandableListAdapter {
                boolean selectGroupAll = isSelectGroupAll();
                //如果商家是选中的，那么总的CheckBox就会选中
                mCheckBox.setChecked(selectGroupAll);
+               //计算总价
+               jiSuanPrice();
                notifyDataSetChanged();
            }
        });
@@ -116,6 +116,7 @@ public class ShopAdapter extends BaseExpandableListAdapter {
             childViewHolder.text_child_name=convertView.findViewById(R.id.text_child_name);
             childViewHolder.img_child=convertView.findViewById(R.id.img_child);
             childViewHolder.custom=convertView.findViewById(R.id.custom);
+
             convertView.setTag(childViewHolder);
         }
         else{
@@ -128,7 +129,17 @@ public class ShopAdapter extends BaseExpandableListAdapter {
         Uri uri = Uri.parse(shopBean.getData().get(groupPosition).getList().get(childPosition).getImages());
         childViewHolder.img_child.setImageURI(uri);
         childViewHolder.check_child.setTag(groupPosition+"#"+childPosition);
-
+        //接口回调   获取加加减减
+        childViewHolder.custom.setLisenter(new PriceView.OnAmountLisenter() {
+            @Override
+            public void onAmount(int num) {
+                Log.i("eeee", "onAmount: "+num);
+                shopBean.getData().get(groupPosition).getList().get(childPosition).setNum(num);
+                //计算总价
+                jiSuanPrice();
+                notifyDataSetChanged();
+            }
+        });
         childViewHolder.check_child.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,16 +163,7 @@ public class ShopAdapter extends BaseExpandableListAdapter {
                 notifyDataSetChanged();
             }
         });
-        //接口回调   获取加加减减
-        childViewHolder.custom.setLisenter(new PriceView.OnAmountLisenter() {
-            @Override
-            public void onAmount(int num) {
-                Log.i("eeee", "onAmount: "+num);
-                shopBean.getData().get(groupPosition).getList().get(childPosition).setNum(num+"");
-                //计算总价
-                jiSuanPrice();
-            }
-        });
+
         return convertView;
     }
 //计算总价
@@ -170,8 +172,8 @@ public class ShopAdapter extends BaseExpandableListAdapter {
         for (int i = 0; i < shopBean.getData().size(); i++)
             for (int j = 0; j < shopBean.getData().get(i).getList().size(); j++)
                 if (shopBean.getData().get(i).getList().get(j).isCheck()) {
-                    int num = Integer.parseInt(shopBean.getData().get(i).getList().get(j).getNum());
-                    int price = Integer.parseInt(shopBean.getData().get(i).getList().get(j).getPrice());
+                    int num = shopBean.getData().get(i).getList().get(j).getNum();
+                    int price = shopBean.getData().get(i).getList().get(j).getPrice();
                     totalprice += price * num;
                 }
         priceTotal.setText(totalprice+"");
@@ -226,6 +228,9 @@ public class ShopAdapter extends BaseExpandableListAdapter {
                 CheckBox checkBox= (CheckBox) v;
                 //全部选中     checkBox.isChecked()选中状态
                 selectAll(checkBox.isChecked());
+               //计算总价
+                jiSuanPrice();
+                notifyDataSetChanged();
             }
         });
     }
