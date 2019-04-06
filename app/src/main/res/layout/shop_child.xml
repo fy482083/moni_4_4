@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+       <CheckBox
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="50dp"
+           android:layout_marginLeft="50dp"
+           android:id="@+id/check_child"/>
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_child"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="200dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="gggggggggg"
+            android:lines="1"
+            android:layout_marginTop="15dp"
+            android:id="@+id/text_child_name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vvvvvvvvvv"
+            android:textColor="#f00"
+            android:layout_marginTop="60dp"
+            android:id="@+id/text_child_price"/>
+
+        <example.com.moni_4_4.view.activity.PriceView
+            android:id="@+id/custom"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="50dp">
+
+        </example.com.moni_4_4.view.activity.PriceView>
+    </RelativeLayout>
+
+</RelativeLayout>
